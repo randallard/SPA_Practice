@@ -1,0 +1,8 @@
+#!/bin/bash
+# See http://code.google.com/p/jslint4java/
+# cp to /usr/local/sbin
+for jsfile in $@;
+do /usr/bin/java \
+-jar /usr/local/lib/jslint4java-2.0.5.jar \
+"$jsfile";
+done
