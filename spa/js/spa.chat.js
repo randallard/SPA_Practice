@@ -112,7 +112,7 @@ spa.chat = (function () {
     window_height_em = Math.floor(
       ( $(window).height() / px_per_em ) + 0.5
     );
-    opened_height_em = configMap.slider_opened_em
+    opened_height_em 
       = window_height_em > configMap.window_height_min_em
       ? configMap.slider_opened_em
       : configMap.slider_opened_min_em;

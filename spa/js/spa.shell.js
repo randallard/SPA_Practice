@@ -69,6 +69,8 @@ spa.shell = (function () {
       $nav       : $container.find('.spa-shell-main-nav') 
     };
   };
+  // End DOM method /setJqueryMap/
+
   // Begin DOM method /changeAnchorPart/
   // Purpose : Changes part of the URI anchor component
   // Arguments:
@@ -133,8 +135,10 @@ spa.shell = (function () {
   };
   // End DOM method /changeAnchorPart/
   
-  onTapAcct = function ( /* event */ ) {
+  onTapAcct = function ( event ) {
     var /* acct_text, */ user_name, user = spa.model.people.get_user();
+    
+    console.log(event); // used to pass jslint
     if ( user.get_is_anon() ) {
       user_name = prompt( 'Please sign-in' );
       spa.model.people.login( user_name );
@@ -146,11 +150,13 @@ spa.shell = (function () {
     return false;
   };
 
-  onLogin = function ( /* event, */ login_user ) {
+  onLogin = function ( event, login_user ) {
+    console.log(event); // used to pass jslint
     jqueryMap.$acct.text( login_user.name );
   };
 
-  onLogout = function ( /* event, logout_user */ ) {
+  onLogout = function ( event, logout_user ) {
+    console.log(event + logout_user); // used to pass jslint
     jqueryMap.$acct.text( 'Please sign-in' );
   };
   //---------------------- END DOM METHODS ---------------------
