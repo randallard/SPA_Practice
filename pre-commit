@@ -1,0 +1,36 @@
+#!/bin/bash
+# See www.davidpashley.com/articles/writing-robust-shell-scripts.html
+# unset var check
+set -u;
+# exit on error check
+# set -e;
+BAIL=0;
+TMP_FILE="/tmp/git-pre-commit.tmp";
+echo;
+echo "JSLint test of updated or new *.js files ...";
+echo " We ignore third_party libraries in .../js/third_party/...";
+git status \
+| grep '.js$' \
+| grep -v '/js/jq/' \
+| grep '#\s\+\(modified\|new file\)' \
+| sed -e 's/^#\s\+\(modified\|new file\):\s\+//g' \
+| sed -e 's/\s\+$//g' \
+| while read LINE; do
+echo -en " Check ${LINE}: ... "
+CHECK=$(jslint $LINE);
+if [ "${CHECK}" != "" ]; then
+echo "FAIL";
+else
+echo "pass";
+fi;
+done \
+| tee "${TMP_FILE}";
+echo "JSlint test complete";
+if grep -s 'FAIL' "${TMP_FILE}"; then
+echo "JSLint testing FAILED";
+echo " Please use jslint to test the failed files and ";
+echo " commit again once they pass the check.";
+exit 1;
+fi
+echo;
+exit 0;
